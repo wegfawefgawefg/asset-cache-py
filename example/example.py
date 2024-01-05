@@ -2,7 +2,7 @@ import simpleaudio as sa
 import wave
 import numpy as np
 from PIL import Image
-from small_ass_cache import AssetCache, AssetMapping, base_path, loader
+from small_ass_cache import AssetCache, AssetMapping, loader
 
 ################    DEFINE YOUR LOADERS    ################
 
@@ -26,16 +26,14 @@ def load_audio(path):
 ################    DEFINE YOUR ASSETS    ################
 
 
-@base_path("assets/images/")
-@loader(load_image)
+@loader(load_image, path="assets/images/")
 class Images(AssetMapping):
     CHIPS = "chips.png"
     FOOD = "food.png"
     GEAR = "gear.png"
 
 
-@base_path("assets/audio/")
-@loader(load_audio)
+@loader(load_audio, path="assets/audio/")
 class Audio(AssetMapping):
     GO = "go.wav"
     AWAY = "away.wav"
