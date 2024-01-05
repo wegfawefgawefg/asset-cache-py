@@ -1,8 +1,7 @@
 import simpleaudio as sa
 import wave
 import numpy as np
-from PIL import Image  # Corrected import for PIL
-
+from PIL import Image
 from small_ass_cache import AssetCache, AssetMapping, base_path, loader
 
 ################    DEFINE YOUR LOADERS    ################

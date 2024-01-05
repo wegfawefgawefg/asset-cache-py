@@ -22,7 +22,7 @@ Has the following advantages:
 ## How do?
 
 ### Installation
-1. Copy small_ass_cache.py to your folder
+1. pip install small-ass-cache
 2. Import
 ```python
 from small_ass_cache import AssetCache, AssetMapping, base_path, loader
