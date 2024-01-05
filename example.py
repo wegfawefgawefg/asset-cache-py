@@ -8,14 +8,6 @@ from small_ass_cache import base_path, loader, AssetMapping, AssetCache
 ################    DEFINE YOUR LOADERS    ################
 
 
-def play_audio(audio_data, params):
-    # Convert the buffer to a NumPy array appropriate for playback
-    audio_array = np.frombuffer(audio_data, dtype=np.int16)
-    # Play the audio
-    play_obj = sa.play_buffer(audio_array, **params)
-    play_obj.wait_done()  # Wait until sound has finished playing
-
-
 def load_image(path):
     return Image.open(path)
 
@@ -51,6 +43,14 @@ class Audio(AssetMapping):
 
 
 ################    USE IT    ################
+
+
+# little utility function to play a sound
+def play_audio(audio_data, params):
+    audio_array = np.frombuffer(audio_data, dtype=np.int16)
+    play_obj = sa.play_buffer(audio_array, **params)
+    play_obj.wait_done()
+
 
 assets = AssetCache()
 assets.preload([Images.CHIPS, Audio.AWAY])
