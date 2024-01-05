@@ -2,7 +2,7 @@
 # small-ass-cache
 
 ## What is it?
-The "SMALL ASSet Cache" is an asset management system that lets you declare your assets once and load them when you need them. It is really intended to be used for games, but can be used for any project that needs to load assets from a file system.
+The "SMALL ASSet Cache" is a single file asset management system that lets you declare your assets once and load them when you need them. It is really intended to be used for games, but can be used for any project that needs to load assets from a file system.
 
 ## Why was it made?
 I got tired of writing the same shit over and over. This enables my future self be lazy.
@@ -20,6 +20,14 @@ Has the following advantages:
 - Is only like 100 lines of code. (Hackable, Grokkable.)
 
 ## How do?
+
+### Installation
+1. Copy small_ass_cache.py to your folder
+2. Import
+```python
+from small_ass_cache import AssetCache, AssetMapping, base_path, loader
+```
+
 ### 1. Define Loading Functions
 
 
@@ -145,10 +153,5 @@ loader = AssetCache()
 bert_model = loader.get(HuggingFaceModels.BERT_BASE_UNCASED)
 ```
 
-## Installation
-1. Copy small_ass_cache.py to your folder. 
-2. Import things
-```python
-from small_ass_cache import AssetCache, AssetMapping, base_path, loader
-```
+
 
