@@ -1,3 +1,4 @@
+![Icon](icon.png)
 # small-ass-cache
 
 ## What is it?
