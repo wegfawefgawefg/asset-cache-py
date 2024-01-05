@@ -67,6 +67,10 @@ class AssetCache:
                 # Handle the case where the necessary methods aren't found.
                 raise TypeError(f"No load function defined for asset {asset_enum}")
 
+    def remove(self, asset_enum):
+        if asset_enum in self.cache:
+            del self.cache[asset_enum]
+
     def preload(self, assets):
         for asset in assets:
             self.get(asset)
@@ -76,6 +80,14 @@ class AssetCache:
 
 
 ################    USER DEFINED    ################
+def play_audio(audio_data, params):
+    # Convert the buffer to a NumPy array appropriate for playback
+    audio_array = np.frombuffer(audio_data, dtype=np.int16)
+    # Play the audio
+    play_obj = sa.play_buffer(audio_array, **params)
+    play_obj.wait_done()  # Wait until sound has finished playing
+
+
 def load_image(path):
     return Image.open(path)
 
@@ -90,14 +102,6 @@ def load_audio(path):
             "sample_rate": wav_file.getframerate(),
         }
         return (audio_data, params)
-
-
-def play_audio(audio_data, params):
-    # Convert the buffer to a NumPy array appropriate for playback
-    audio_array = np.frombuffer(audio_data, dtype=np.int16)
-    # Play the audio
-    play_obj = sa.play_buffer(audio_array, **params)
-    play_obj.wait_done()  # Wait until sound has finished playing
 
 
 @base_path("assets/images/")
@@ -117,15 +121,15 @@ class Audio(AssetMapping):
 
 ################    USAGE    ################
 
-loader = AssetCache()
-loader.preload([Images.CHIPS, Audio.AWAY])
+assets = AssetCache()
+assets.preload([Images.CHIPS, Audio.AWAY])
 
-image_asset = loader.get(Images.FOOD)
+image_asset = assets.get(Images.FOOD)
 image_asset.show()
 
-sound_asset, sound_params = loader.get(Audio.GO)
+sound_asset, sound_params = assets.get(Audio.GO)
 play_audio(sound_asset, sound_params)
 
 
 print("clearing cache...")
-loader.clear_cache()
+assets.clear_cache()
