@@ -1,2 +1,2 @@
 # asset-cache-py
-trying to make an asset cache
+an okay asset cache that is very python 
