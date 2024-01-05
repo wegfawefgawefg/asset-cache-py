@@ -3,7 +3,7 @@ import wave
 import numpy as np
 from PIL import Image  # Corrected import for PIL
 
-from small_ass_cache import base_path, loader, AssetMapping, AssetCache
+from small_ass_cache import AssetCache, AssetMapping, base_path, loader
 
 ################    DEFINE YOUR LOADERS    ################
 

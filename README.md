@@ -22,6 +22,9 @@ Has the following advantages:
 ## How do?
 ### 1. Define Loading Functions
 
+
+
+
 First, define some functions for loading each type of asset. 
 Here are some example load functions for loading images and audio files:
 
@@ -49,6 +52,8 @@ Next, define your assets.
 
 
 ```python
+from small_ass_cache import AssetMapping, base_path, loader
+
 @base_path("assets/images/")
 @loader(load_image)
 class Images(AssetMapping):
@@ -73,6 +78,8 @@ The second time you request the asset, it will already be in the cache and gets 
 
 
 ```python
+from small_ass_cache import AssetCache
+
 assets = AssetCache()
 image_asset = assets.get(Images.FOOD) # a cold load
 fat_audio_asset = assets.get(Audio.GO) # also a cold load
@@ -137,3 +144,11 @@ class HuggingFace(AssetMapping):
 loader = AssetCache()
 bert_model = loader.get(HuggingFaceModels.BERT_BASE_UNCASED)
 ```
+
+## Installation
+1. Copy small_ass_cache.py to your folder. 
+2. Import things
+```python
+from small_ass_cache import AssetCache, AssetMapping, base_path, loader
+```
+
