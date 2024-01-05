@@ -22,7 +22,7 @@ Has the following advantages:
 ### 1. Define Loading Functions
 
 First, define some functions for loading each type of asset. 
-Here is an example for loading images and audio files:
+Here are some example load functions for loading images and audio files:
 
 ```python
 def load_image(path):
@@ -74,10 +74,12 @@ The second time you request the asset, it will already be in the cache and gets 
 ```python
 assets = AssetCache()
 image_asset = assets.get(Images.FOOD) # a cold load
-audio_asset = assets.get(Audio.GO)    # a cold load
+fat_audio_asset = assets.get(Audio.GO) # also a cold load
+the_same_image_asset = assets.get(Images.FOOD) # a warm load
 
-#do somthing with your asset
-image_asset.show()
+
+#now go do something with your sorry asset
+the_same_image_asset.show()
 play_audio(audio_asset)
 ```
 
@@ -124,7 +126,6 @@ class Audio(AssetMapping):
 ### 6. Get Creative
 ```python
 def load_hf_model(model_name):
-    """Load a Hugging Face model given its name."""
     return AutoModel.from_pretrained(model_name)
 
 @loader(load_hf_model)
