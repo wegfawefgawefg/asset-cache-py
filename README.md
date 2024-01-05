@@ -1,16 +1,22 @@
-# asset-cache-py
-an okay asset cache that is very python 
+# small-ass-cache
 
 ## What is it?
+The "SMALL ASSet Cache" is an asset management system that lets you declare your assets once and load them when you need them. It is really intended to be used for games, but can be used for any project that needs to load assets from a file system.
 
-Its an asset management system that lets you declare your assets once and load them when you need them. 
+## Why was it made?
+I got tired of writing the same shit over and over. This enables my future self be lazy.
 
-## Why use it?
+## But why should I use it?
 Has the following advantages:
-- Lets you declare your assets in the same place as the paths (no more dictionary of mappings)
-- Uses an enum as the base type for your assets (instead of strings)
-- This means your editor will autocomplete your asset names for you.
-- Has a preload feature to warm the cache
+- Lets you declare your assets in the same place as the paths (no more dictionary of mappings).
+- Uses an enum as the base type for your assets (instead of strings). This means your editor will autocomplete your asset names for you. 
+- Your editor will autocomplete your asset names for you.
+- Your editor will autocomplete your asset names for you.
+- Your editor will autocomplete your asset names for you.
+- Your editor may also detect asset name typos. (thank you)
+- Has a preload feature to warm the cache.
+- Is already written.
+- Is only like 100 lines of code. (Hackable, Grokkable.)
 
 ## How do?
 ### 1. Define Loading Functions
@@ -34,9 +40,11 @@ def load_audio(path):
         return (audio_data, params)
 ```
 
-### 2. Define Your Asset Enums
+### 2. Define Your Assets
 
-Next, define your asset enums.
+Next, define your assets. 
+- A base_path decorator lets you specify a base path so you dont have to type it over and over again. (optional)
+- The loader decorator is how you specify a load function for the assets in that enum. (not optional) ((how do expect the library to account for any possible file type, including user defined ones?)) 
 
 
 ```python
@@ -55,15 +63,11 @@ class Audio(AssetMapping):
 
 ```
 
-- The base_path decorator lets you specify a base path so you dont have to type it over and over again. (optional)
-- The loader decorator is how you specify a load function for the assets in that enum. (not optional) ((how do expect the library to account for any possible file type, including user defined ones?)) 
-
-
 ### 3. Use Your Asset Cache
 
 Make an instance of the AssetCache class.
 When you need an asset, get it from the cache.
-If the asset is not in the cache, it will be loaded and added to the cache.
+If the asset is not in the cache, it will be loaded from "disk" and added to the cache.
 The second time you request the asset, it will already be in the cache and gets returned immediately.
 
 
@@ -92,4 +96,42 @@ Can also remove all or just one asset from the cache.
 ```python
 assets.remove(Images.CHIPS) # no longer cached
 assets.clear_cache() # remove all
+```
+
+### 5. Call The Cops
+```python
+def load_remote(url):
+    # convert URL to safe local filename
+    local_filename = safe_filename(url)
+    local_path = os.path.join('assets/remote/', local_filename)
+
+    # check if local file exists
+    if not os.path.exists(local_path):
+        # If not, download it
+        print(f"Downloading: {url}")
+        download_file(url, local_path)
+    else:
+        print(f"Using cached file: {local_path}")
+
+    return load_audio(local_path)
+
+@base_path("assets/remote/")
+@loader(load_remote)
+class Audio(AssetMapping):
+    BEEP_SOUND = "https://www.soundjay.com/button/beep-07.wav"
+```
+
+### 6. Get Creative
+```python
+def load_hf_model(model_name):
+    """Load a Hugging Face model given its name."""
+    return AutoModel.from_pretrained(model_name)
+
+@loader(load_hf_model)
+class HuggingFace(AssetMapping):
+    BERT_BASE_UNCASED = "bert-base-uncased"
+    GPT2 = "gpt2"
+
+loader = AssetCache()
+bert_model = loader.get(HuggingFaceModels.BERT_BASE_UNCASED)
 ```
