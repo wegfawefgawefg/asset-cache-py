@@ -39,7 +39,6 @@ Has the following advantages:
    ```python
    from small_ass_cache import {
        AssetCache,
-       AssetMapping,
        loader
    }
    ```
@@ -69,23 +68,32 @@ def load_audio(path):
 
 Next, define your assets.
 
-- A base_path decorator lets you specify a base path so you dont have to type it over and over again. (optional)
-
-- The loader decorator is how you specify a load function for the assets in that enum. (not optional) ((how do expect the library to account for any possible file type, including user defined ones?))
+The @loader decorator is how you make define assets. The assets are paired with your load function.
+If you have assets that need different load functions because they are different file types, define them seperately.
+Your assets are Enums so you can match on them and such, so you have to derive from Enum.
 
 ```python
-from small_ass_cache import AssetMapping, loader
+from small_ass_cache import loader
 
 @loader(load_image, path="assets/images/")
-class Images(AssetMapping):
+class Images(Enum):
     CHIPS = "chips.png"
     FOOD = "food.png"
     GEAR = "gear.png"
 
 @loader(load_audio, path="assets/audio/")
-class Audio(AssetMapping):
+class Audio(Enum):
     GO = "go.wav"
     AWAY = "away.wav"
+
+```
+
+If you want you can just put full paths in your assets. It's optional in the @loader, but you are weird.
+```python
+@loader(load_txt)
+class Audio(Enum):
+    A_THING = "moms_files/credit_card.txt
+    A_TOTALLY_DIFFERENT_THING = "users/you/home/documents/social_security.txt"
 
 ```
 
@@ -146,7 +154,7 @@ def load_remote(url):
     return load_audio(local_path)
 
 @loader(load_remote, path="assets/remote/")
-class Audio(AssetMapping):
+class Audio(Enum):
     BEEP_SOUND = "https://www.soundjay.com/button/beep-07.wav"
 ```
 
@@ -157,10 +165,12 @@ def load_hf_model(model_name):
     return AutoModel.from_pretrained(model_name)
 
 @loader(load_hf_model)
-class HuggingFace(AssetMapping):
+class HuggingFace(Enum):
     BERT_BASE_UNCASED = "bert-base-uncased"
     GPT2 = "gpt2"
 
 loader = AssetCache()
 bert_model = loader.get(HuggingFaceModels.BERT_BASE_UNCASED)
 ```
+
+I know AutoModel already caches, but you get the idea.

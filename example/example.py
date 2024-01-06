@@ -1,8 +1,14 @@
 import simpleaudio as sa
 import wave
 import numpy as np
+from enum import Enum
 from PIL import Image
-from small_ass_cache import AssetCache, AssetMapping, loader
+
+# Uncomment these lines to make the example work without installing the package
+import sys
+
+sys.path.append("../")
+from small_ass_cache import AssetCache, loader
 
 ################    DEFINE YOUR LOADERS    ################
 
@@ -27,14 +33,14 @@ def load_audio(path):
 
 
 @loader(load_image, path="assets/images/")
-class Images(AssetMapping):
+class Images(Enum):
     CHIPS = "chips.png"
     FOOD = "food.png"
     GEAR = "gear.png"
 
 
 @loader(load_audio, path="assets/audio/")
-class Audio(AssetMapping):
+class Audio(Enum):
     GO = "go.wav"
     AWAY = "away.wav"
 
