@@ -92,7 +92,7 @@ If you want you can just put full paths in your assets. It's optional in the @lo
 ```python
 @loader(load_txt)
 class Audio(Enum):
-    A_THING = "moms_files/credit_card.txt
+    A_THING = "moms_files/credit_card.txt"
     A_TOTALLY_DIFFERENT_THING = "users/you/home/documents/social_security.txt"
 
 ```
