@@ -68,7 +68,7 @@ def load_audio(path):
 
 Next, define your assets.
 
-The @loader decorator is how you make define assets. The assets are paired with your load function.
+The @loader decorator is how you define assets. The assets are paired with your load function.
 If you have assets that need different load functions because they are different file types, define them seperately.
 Your assets are Enums so you can match on them and such, so you have to derive from Enum.
 
